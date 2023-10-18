@@ -6,7 +6,16 @@ class A
 	int value;
 public:
 
-	friend ostream& operator <<(ostream& os, const A& obj);
+	//friend ostream& operator <<(ostream& os, const A& obj);
+
+	void SetValue(int v) {
+		value= v;
+	}
+
+	int GetValue() const {
+		return value;
+	}
+
 
 	A() {
 		value = 0;
@@ -36,14 +45,57 @@ public:
 		res.value = value + v.value;
 		return res;
 	}
+	A& operator-(int v)
+	{
+		A res;
+		res.value = value - v;
+		return res;
+	}
+
+	A& operator-(A v)
+	{
+		A res;
+		res.value = value - v.value;
+		return res;
+	}
+	A& operator*(int v)
+	{
+		A res;
+		res.value = value * v;
+		return res;
+	}
+
+	A& operator*(A v)
+	{
+		A res;
+		res.value = value * v.value;
+		return res;
+	}
+
+	A& operator/(int v)
+	{
+		A res;
+		res.value = value /v;
+		return res;
+	}
 
 };
 
-ostream& operator<<(ostream& os, const A& obj)
+istream& operator >>(istream& is, A& obj)
 {
-	os << obj.value;
-	return os;
+
+	int value;
+	is >> value;
+	obj.SetValue(value);
+	return is;
 }
+ostream& operator <<(ostream& os, const A& obj)
+{
+	os << obj.GetValue() << endl;
+	return os;
+
+}
+
 
 
 int main()
@@ -61,6 +113,30 @@ int main()
 	cout << "Matrix3 (matrix1 + matrix2):" << endl;
 	matrix3.Print();
 
+	Matrix<A> matrix4 = matrix1 - matrix2;
+	cout << "Matrix4 (matrix1 - matrix2):" << endl;
+	matrix4.Print();
 
 
+	Matrix<A> matrix5 = matrix1 - 10;
+	cout << "Matrix5 (matrix1 - 10):" << endl;
+	matrix5.Print();
+
+	Matrix<A> matrix6 = matrix1 * 10;
+	cout << "Matrix6 (matrix1 * 10):" << endl;
+	matrix6.Print();
+
+
+	Matrix<A> matrix7 = matrix1 * matrix2;
+	cout << "Matrix7 (matrix1 * matrix2):" << endl;
+	matrix7.Print();
+
+	Matrix<A> matrix8 = matrix2 / 2;
+	cout << "Matrix8 (matrix2 / 10):" << endl;
+	matrix8.Print();
+
+
+	/*Matrix<A> matrixx(3,3);
+	matrixx.Input();
+	matrixx.Print();*/
 }
