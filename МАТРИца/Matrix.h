@@ -8,10 +8,11 @@ template<class T> class Matrix
 	T** array;
 	int rows;
 	int cols;
+	
 public:
 	static int instanceCount;
 	Matrix()=default;
-	//Matrix(initializer_list<T> a);
+	Matrix(initializer_list<initializer_list<T>> lst);
 	Matrix(int rows, int cols);
 	Matrix(const Matrix&);
 	~Matrix();
@@ -27,29 +28,35 @@ public:
 	Matrix<T> operator/(int n);
 	T SearchMaxElem();
 	T SearchMinElem();
+	//static int GetInstanceCount();
 
 
 };
 
-//
-//template <class T>
-//Matrix<T>::Matrix(initializer_list<T> a) {
-//	this->rows = a.size;
-//	this->cols= a.begin()->size();
-//    array = new T * [rows];
-//
-//	for (const auto& row : param) {
-//				array[i] = new T[cols];
-//				int j = 0;
-//				for (const auto*x : row) {
-//					array[i][j] =*x;
-//					j++;
-//				}
-//				i++;
-//	}
-//
-//}
-//
+template<class T>
+int Matrix<T>::instanceCount = 0;
+
+template <class T>
+inline Matrix<T>::Matrix(initializer_list<initializer_list<T>> a) {
+	rows = a.size();
+	cols = a.begin()->size();
+    array = new T* [rows];
+
+	int r = 0;
+	for (auto ptr = a.begin(); ptr != a.end(); ptr++) {
+		array[r] = new T[cols];
+		int c = 0;
+		for (auto ptc = ptr->begin(); ptc != ptr->end(); ptc++)
+		{
+			array[r][c] = *ptc;
+			c++;
+		}
+		r++;
+	}
+	instanceCount++;
+
+}
+
 
 
 
@@ -139,7 +146,7 @@ inline void Matrix<T>::Print()
 		
 		for (int c = 0; c < cols; c++)
 		{
-			cout << array[r][c];
+			cout <<"["<<array[r][c]<<"]";
 
 		}
 		cout << endl;
@@ -307,4 +314,3 @@ inline T Matrix<T>::SearchMinElem()
 	}
 	return min;
 }
-

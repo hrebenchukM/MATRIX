@@ -91,7 +91,7 @@ istream& operator >>(istream& is, A& obj)
 }
 ostream& operator <<(ostream& os, const A& obj)
 {
-	os << obj.GetValue() << endl;
+	os << obj.GetValue();
 	return os;
 
 }
@@ -135,13 +135,17 @@ int main()
 	cout << "Matrix8 (matrix2 / 10):" << endl;
 	matrix8.Print();
 
-	cout << "Count of Matrix: " << Matrix<int>::instanceCount << endl;
 
-	//Matrix<A> matrix9 ={
-	//{1, 2, 3},
-	//{4, 5, 6},
-	//{7, 8, 9}
-	//};
+	Matrix<A> matrix9 = {
+	  {1, 2, 3},
+	  {4, 5, 6},
+	  {7, 8, 9}
+	};
+	matrix9.Print();
+	
+	cout << "Count of Matrix: " << Matrix<A>::instanceCount << endl;
+
+
 	/*Matrix<A> matrixx(3,3);
 	matrixx.Input();
 	matrixx.Print();*/
