@@ -38,20 +38,22 @@ int Matrix<T>::instanceCount = 0;
 
 template <class T>
 inline Matrix<T>::Matrix(initializer_list<initializer_list<T>> a) {
-	rows = a.size();
-	cols = a.begin()->size();
-    array = new T* [rows];
+	rows = a.size();//3// Получаем количество строк (количество вложенных initializer_list) в переданном initializer_list
+ 
+	cols = a.begin()->size();//4// Получаем количество столбцов (размер первого вложенного initializer_list) в переданном initializer_list
 
-	int r = 0;
-	for (auto ptr = a.begin(); ptr != a.end(); ptr++) {
-		array[r] = new T[cols];
-		int c = 0;
-		for (auto ptc = ptr->begin(); ptc != ptr->end(); ptc++)
+    array = new T* [rows];//Выделили память для массива указателей из 3 элементов
+
+	int r = 0;// Индекс строки матрицы
+	for (auto ptr = a.begin(); ptr != a.end(); ptr++) {//Перемещаемся по строкам (внешнему иницалайзеру)
+		array[r] = new T[cols];//Выделяем память по очереди на конкретную строку на 4 эемента
+		int c = 0;// Индекс столбца матрицы
+		for (auto ptc = ptr->begin(); ptc != ptr->end(); ptc++)//Перемещаемся по столбцам (внутреннему иницалайзеру)
 		{
-			array[r][c] = *ptc;
-			c++;
+			array[r][c] = *ptc;// Заполняем матрицу значениями из вложенного initializer_list 
+			c++;// Переходим к следующему столбцу (внутреннего иницалайзера)
 		}
-		r++;
+		r++;//Переходим к следующей строке(внешнего иницалайзера)
 	}
 	instanceCount++;
 
