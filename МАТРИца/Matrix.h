@@ -9,7 +9,9 @@ template<class T> class Matrix
 	int rows;
 	int cols;
 public:
+	static int instanceCount;
 	Matrix()=default;
+	//Matrix(initializer_list<T> a);
 	Matrix(int rows, int cols);
 	Matrix(const Matrix&);
 	~Matrix();
@@ -29,6 +31,29 @@ public:
 
 };
 
+//
+//template <class T>
+//Matrix<T>::Matrix(initializer_list<T> a) {
+//	this->rows = a.size;
+//	this->cols= a.begin()->size();
+//    array = new T * [rows];
+//
+//	for (const auto& row : param) {
+//				array[i] = new T[cols];
+//				int j = 0;
+//				for (const auto*x : row) {
+//					array[i][j] =*x;
+//					j++;
+//				}
+//				i++;
+//	}
+//
+//}
+//
+
+
+
+
 template<class T>
 inline Matrix<T>::Matrix(int rows, int cols)
 {
@@ -41,6 +66,7 @@ inline Matrix<T>::Matrix(int rows, int cols)
    {
 	   array[r] = new T[cols];
    }
+	instanceCount++;
 }
 template<class T>
 inline Matrix<T>::Matrix(const Matrix& obj )
@@ -62,6 +88,7 @@ inline Matrix<T>::Matrix(const Matrix& obj )
 		}
 	
 	}
+	instanceCount++;
 }
 
 
@@ -75,6 +102,7 @@ inline Matrix<T>::~Matrix()
 		delete[] array[r];
 	}
 	delete[] array;
+	instanceCount--;
 }
 template<class T>
 inline void Matrix<T>::Random()
